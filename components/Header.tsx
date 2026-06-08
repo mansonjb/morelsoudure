@@ -10,14 +10,9 @@ function Logo() {
       <span className="grid h-10 w-10 shrink-0 place-items-center bg-weld text-ink transition-colors group-hover:bg-weld-bright">
         <IconTorch className="h-6 w-6" strokeWidth={1.6} />
       </span>
-      <span className="flex flex-col leading-none">
-        <span className="font-display text-xl font-semibold uppercase tracking-tight text-cream">
-          Morel<span className="text-weld">.</span>
-          <span className="ml-1 text-fog-dim">Soudure</span>
-        </span>
-        <span className="mt-1 hidden text-[10px] font-medium uppercase tracking-[0.1em] text-fog-dim sm:block">
-          Le savoir-fer, point par point
-        </span>
+      <span className="font-display text-xl font-semibold uppercase leading-none tracking-tight text-cream">
+        Morel<span className="text-weld">.</span>
+        <span className="ml-1 text-fog-dim">Soudure</span>
       </span>
     </a>
   );

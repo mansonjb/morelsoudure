@@ -80,11 +80,9 @@ export default function Hero() {
               style={{ transitionDelay: "60ms" }}
               className="mt-6 font-display text-5xl font-semibold uppercase leading-[0.98] text-cream sm:text-6xl md:text-7xl"
             >
-              L'acier entre
+              Le savoir-<span className="text-weld">fer</span>,
               <br />
-              de bonnes
-              <br />
-              mains<span className="text-weld">.</span>
+              point par point<span className="text-weld">.</span>
             </h1>
 
             <p
