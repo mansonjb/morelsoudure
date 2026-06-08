@@ -1,26 +1,149 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Backgrounds - acier sombre */
+  --color-ink: #0a0b0d;
+  --color-steel-950: #0d0f12;
+  --color-steel-900: #121519;
+  --color-steel-850: #161a20;
+  --color-steel-800: #1b2026;
+  --color-steel-700: #262c35;
+  --color-steel-600: #353d49;
+
+  /* Texte */
+  --color-cream: #f4f6f8;
+  --color-fog: #a1abb8;
+  --color-fog-dim: #6e7884;
+
+  /* Accent - orange soudure */
+  --color-weld: #ff6a1a;
+  --color-weld-bright: #ff8b3d;
+  --color-weld-deep: #b8430a;
+  --color-ember: #ffb07a;
+
+  /* Typo */
+  --font-display: var(--font-oswald);
+  --font-sans: var(--font-inter);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-ink);
+  color: var(--color-fog);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: hidden;
 }
+
+::selection {
+  background: var(--color-weld);
+  color: #0a0b0d;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display), system-ui, sans-serif;
+  color: var(--color-cream);
+  letter-spacing: -0.01em;
+  line-height: 1.02;
+}
+
+/* Ancrage des sections sous le header sticky */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+/* ---------- Conteneur ---------- */
+.u-container {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 768px) {
+  .u-container { padding-inline: 2.5rem; }
+}
+
+/* ---------- Textures & lumières ---------- */
+.grid-texture {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.glow-weld {
+  background: radial-gradient(
+    60% 60% at 50% 50%,
+    rgba(255, 106, 26, 0.22) 0%,
+    rgba(255, 106, 26, 0.07) 42%,
+    transparent 72%
+  );
+}
+
+/* Petit trait orange décoratif devant un label */
+.kicker::before {
+  content: "";
+  display: inline-block;
+  width: 26px;
+  height: 2px;
+  background: var(--color-weld);
+  vertical-align: middle;
+  margin-right: 12px;
+  margin-bottom: 3px;
+}
+
+/* ---------- Étincelles du hero ---------- */
+.spark {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: var(--color-weld-bright);
+  box-shadow: 0 0 8px 2px rgba(255, 139, 61, 0.85);
+  opacity: 0;
+  animation: spark-fly 3.4s ease-in infinite;
+}
+@keyframes spark-fly {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  12% { opacity: 1; }
+  72% { opacity: 0.9; }
+  100% { transform: translateY(-170px) scale(0.2); opacity: 0; }
+}
+
+/* ---------- Bandeau défilant ---------- */
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 30s linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ---------- Reveal au scroll ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.75s cubic-bezier(0.22, 0.7, 0.2, 1),
+    transform 0.75s cubic-bezier(0.22, 0.7, 0.2, 1);
+  will-change: opacity, transform;
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .spark, .marquee-track { animation: none; }
+  html { scroll-behavior: auto !important; }
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--color-steel-950); }
+::-webkit-scrollbar-thumb { background: var(--color-steel-700); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-weld-deep); }
